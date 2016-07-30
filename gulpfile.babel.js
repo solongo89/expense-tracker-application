@@ -430,11 +430,11 @@ gulp.task('wiredep:client', () => {
     return gulp.src(paths.client.mainView)
         .pipe(wiredep({
             exclude: [
-                /bootstrap.js/,
+                // /bootstrap.js/,
                 '/json3/',
                 '/es5-shim/',
                 /font-awesome\.css/,
-                /bootstrap\.css/,
+                // /bootstrap\.css/,
                 /bootstrap-sass-official/
             ],
             ignorePath: clientPath
