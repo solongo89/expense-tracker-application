@@ -1,41 +1,39 @@
 'use strict';
 
 class SignupController {
-  //end-non-standard
 
-  constructor(Auth, $state) {
-      this.Auth = Auth;
-      this.$state = $state;
+    constructor(Auth, $state) {
+        this.Auth = Auth;
+        this.$state = $state;
     }
-    //start-non-standard
 
+    register(form) {
+        this.submitted = true;
 
-  register(form) {
-    this.submitted = true;
+        if (form.$valid) {
+            this.Auth.registerUser({
+                    role: this.user.role,
+                    name: this.user.name,
+                    email: this.user.email,
+                    password: this.user.password
+                })
+                .then(() => {
+                    // Account created, redirect to home
+                    this.$state.go('main');
+                })
+                .catch(err => {
+                    err = err.data;
+                    this.errors = {};
 
-    if (form.$valid) {
-      this.Auth.createUser({
-          name: this.user.name,
-          email: this.user.email,
-          password: this.user.password
-        })
-        .then(() => {
-          // Account created, redirect to home
-          this.$state.go('main');
-        })
-        .catch(err => {
-          err = err.data;
-          this.errors = {};
-
-          // Update validity of form fields that match the mongoose errors
-          angular.forEach(err.errors, (error, field) => {
-            form[field].$setValidity('mongoose', false);
-            this.errors[field] = error.message;
-          });
-        });
+                    // Update validity of form fields that match the mongoose errors
+                    angular.forEach(err.errors, (error, field) => {
+                        form[field].$setValidity('mongoose', false);
+                        this.errors[field] = error.message;
+                    });
+                });
+        }
     }
-  }
 }
 
 angular.module('expenseTrackingApp')
-  .controller('SignupController', SignupController);
+    .controller('SignupController', SignupController);

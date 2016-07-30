@@ -12,6 +12,9 @@
           controller: 'password'
         }
       },
+      updateUser: {
+        method: 'PUT'
+      },
       get: {
         method: 'GET',
         params: {

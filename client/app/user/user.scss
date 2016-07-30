@@ -1,0 +1,12 @@
+.user-list {
+	.row {
+		border: none;
+		border-bottom: 1px lightgray solid;
+		margin: 10px 0px;
+		height: 60px;
+
+		// &:first-child { border-bottom: none; }
+		&:last-child { border-bottom: none; }
+		&.user-info { cursor: pointer; }
+	}
+}

@@ -1,13 +1,13 @@
 'use strict';
 
-describe('Component: mainComponent', function() {
+describe('Component: recordComponent', function() {
 
   // load the controller's module
   beforeEach(module('expenseTrackingApp'));
   beforeEach(module('stateMock'));
 
   var scope;
-  var mainComponent;
+  var recordComponent;
   var state;
   var $httpBackend;
 
@@ -19,15 +19,15 @@ describe('Component: mainComponent', function() {
 
     scope = $rootScope.$new();
     state = $state;
-    mainComponent = $componentController('main', {
+    recordComponent = $componentController('record', {
       $http: $http,
       $scope: scope
     });
   }));
 
   it('should attach a list of records to the controller', function() {
-    mainComponent.$onInit();
+    recordComponent.$onInit();
     $httpBackend.flush();
-    mainComponent.awesomeRecords.length.should.equal(4);
+    recordComponent.awesomeRecords.length.should.equal(4);
   });
 });

@@ -2,10 +2,10 @@
 
 import mongoose from 'mongoose';
 
-var ThingSchema = new mongoose.Schema({
+var RecordSchema = new mongoose.Schema({
   name: String,
   info: String,
   active: Boolean
 });
 
-export default mongoose.model('Thing', ThingSchema);
+export default mongoose.model('Record', RecordSchema);

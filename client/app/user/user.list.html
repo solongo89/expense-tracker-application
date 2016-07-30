@@ -1,0 +1,72 @@
+<div class="container user-list hidden-xs">
+    <div class="row">
+        <div class="col-sm-12">
+            <a ui-sref="user_new" class="btn btn-lg btn-primary">
+                <span class="fa fa-plus"></span>
+                <span>Create a New User</span>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <strong>Name</strong>
+        </div>
+        <div class="col-sm-3">
+            <strong>Email</strong>
+        </div>
+        <div class="col-sm-3">
+            <strong>Role</strong>
+        </div>
+        <div class="col-sm-3 text-center">
+            <strong>Action</strong>
+        </div>
+    </div>
+    <div class="row user-info" ng-repeat="user in vm.users">
+        <div class="col-sm-3" ng-click="vm.showEditUser(user)">
+            <span class="text-muted">{{user.name}}</span>
+        </div>
+        <div class="col-sm-3" ng-click="vm.showEditUser(user)">
+            <span class="text-muted">{{user.email}}</span>
+        </div>
+        <div class="col-sm-3" ng-click="vm.showEditUser(user)">
+            <span class="text-muted">{{user.role}}</span>
+        </div>
+        <div class="col-sm-3 text-center">
+            <button ng-hide="user.role=='admin'" class="btn btn-sm btn-danger" ng-bootbox-confirm="Are you sure you want to delete this user?" ng-bootbox-confirm-action="vm.delete(user)" ng-bootbox-confirm-action-cancel="">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container user-list hidden-sm hidden-md hidden-lg">
+    <div class="row">
+        <div class="col-sm-12">
+            <a ui-sref="user_new" class="btn btn-lg btn-primary">
+                <span class="fa fa-plus"></span>
+                <span>Create</span>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8">
+            <strong>User</strong>
+        </div>
+        <div class="col-xs-4">
+            <strong>Action</strong>
+        </div>
+    </div>
+    <div class="row" ng-repeat="user in vm.users">
+        <div class="col-xs-8">
+            <strong>{{user.name}}</strong>
+            <br/>
+            <span class="text-muted">{{user.email}}</span>
+            <br/>
+            <span class="text-muted">{{user.role}}</span>
+        </div>
+        <div class="col-xs-4">
+            <button ng-hide="user.role=='admin'" class="btn btn-sm btn-danger" ng-bootbox-confirm="Are you sure you want to delete this user?" ng-bootbox-confirm-action="vm.delete(user)" ng-bootbox-confirm-action-cancel="">
+                <span class="fa fa-trash fa-2x"></span>
+            </button>
+        </div>
+    </div>
+</div>

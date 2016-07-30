@@ -4,12 +4,12 @@
  */
 
 'use strict';
-import Thing from '../api/thing/thing.model';
+import Record from '../api/record/record.model';
 import User from '../api/user/user.model';
 
-Thing.find({}).remove()
+Record.find({}).remove()
   .then(() => {
-    Thing.create({
+    Record.create({
       name: 'Development Tools',
       info: 'Integration with popular tools such as Bower, Grunt, Babel, Karma, ' +
              'Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, ' +
@@ -46,6 +46,12 @@ User.find({}).remove()
       name: 'Test User',
       email: 'test@example.com',
       password: 'test'
+    }, {
+      provider: 'local',
+      role: 'manager',
+      name: 'Test Manager',
+      email: 'manager@example.com',
+      password: 'manager'
     }, {
       provider: 'local',
       role: 'admin',

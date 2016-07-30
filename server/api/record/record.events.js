@@ -5,7 +5,7 @@
 'use strict';
 
 import {EventEmitter} from 'events';
-import Thing from './thing.model';
+import Thing from './record.model';
 var ThingEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
