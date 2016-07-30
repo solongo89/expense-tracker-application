@@ -1,6 +1,7 @@
 'use strict';
 
 import User from './user.model';
+import Record from './../record/record.model';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
@@ -69,6 +70,9 @@ export function show(req, res, next) {
  */
 export function destroy(req, res) {
     return User.findByIdAndRemove(req.params.id).exec()
+        .then(function() {
+            return Record.find({user: req.params.id}).remove();
+        })
         .then(function() {
             res.status(204).end();
         })

@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <a ui-sref="record_new" class="btn btn-lg btn-primary">
+                <span class="fa fa-plus"></span>
+                <span>Create a New Record</span>
+            </a>
+            <a ui-sref="record_stats" class="btn btn-lg btn-info" ng-if="!vm.Auth.isAdmin()">
+                <span class="fa fa-print"></span>
+                <span>View Weekly Statistics</span>
+            </a>
+        </div>
+    </div>
+    <table ng-table="vm.tableParams" class="table" show-filter="true">
+        <tr ng-repeat="record in $data" class="record-info">
+            <td ng-if="vm.Auth.isAdmin()" title="'User'" filter="{ 'user.email': 'text'}" sortable="'user.email'" ng-click="vm.showEditRecord(record)">
+                {{record.user.email}}</td>
+            <td title="'Date'" filter="{ datetime: 'text'}" sortable="'datetime'" ng-click="vm.showEditRecord(record)">
+                {{record.datetime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td title="'Description'" filter="{ description: 'text'}" sortable="'description'" ng-click="vm.showEditRecord(record)">
+                {{record.description}}</td>
+            <td title="'Amount'" filter="{ amount: 'number'}" sortable="'amount'" ng-click="vm.showEditRecord(record)">
+                {{record.amount}}</td>
+            <td title="'Comment'" filter="{ comment: 'number'}" sortable="'comment'" ng-click="vm.showEditRecord(record)">
+                {{record.comment}}</td>
+            <td title="'Action'">
+                <button class="btn btn-sm btn-danger" ng-bootbox-confirm="Are you sure you want to delete this record?" ng-bootbox-confirm-action="vm.deleteRecord(record)" ng-bootbox-confirm-action-cancel="">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -403,8 +403,8 @@ gulp.task('test:server', cb => {
         'env:all',
         'env:test',
         'mocha:unit',
-        'mocha:integration',
-        'mocha:coverage',
+        // 'mocha:integration',
+        // 'mocha:coverage',
         cb);
 });
 

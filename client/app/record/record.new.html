@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Create a New Record</h1>
+        </div>
+        <div class="col-sm-12">
+            <form class="form" name="form" ng-submit="vm.addRecord(form)" novalidate>
+                <div class="form-group" ng-show="vm.Auth.isAdmin()" ng-class="{ 'has-success': form.user.$valid && vm.submitted,
+                                            'has-error': form.user.$invalid && vm.submitted }">
+                    <label>User</label>
+                    <select name="user" class="form-control" ng-model="vm.record.user" ng-options="user._id as user.email for user in vm.users" required>
+                    </select>
+                    <p class="help-block" ng-show="form.user.$error.required && vm.submitted">
+                        A user is required
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-success': form.datetime.$valid && vm.submitted,
+                                            'has-error': form.datetime.$invalid && vm.submitted }">
+                    <label>Date Time</label>
+                    <!-- <input type="text" id="datetime" name="datetime" class="form-control form-date" data-date-format="yyyy-MM-dd hh:mm:00" required/> -->
+                    <div class="input-group input-append date" id="datetimepicker">
+                        <input class="form-control form-date" data-format="yyyy-MM-dd hh:mm:00" name="date" type="text" id="date" ng-model="vm.record.datetime" >
+                        <span class="input-group-addon add-on">
+                            <i data-time-icon="fa fa-calendar" data-date-icon="fa fa-calendar"></i>
+                        </span>
+                    </div>
+                    <p class="help-block" ng-show="form.datetime.$error.required && vm.submitted">
+                        A datetime is required
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-success': form.description.$valid && vm.submitted,
+                                            'has-error': form.description.$invalid && vm.submitted }">
+                    <label>Description</label>
+                    <input type="text" name="description" class="form-control" ng-model="vm.record.description" required/>
+                    <p class="help-block" ng-show="form.description.$error.required && vm.submitted">
+                        A description is required
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-success': form.amount.$valid && vm.submitted,
+                                            'has-error': form.amount.$invalid && vm.submitted }">
+                    <label>Amount</label>
+                    <input type="number" name="amount" class="form-control" ng-model="vm.record.amount" required step="0.01" />
+                    <p class="help-block" ng-show="form.amount.$error.required && vm.submitted">
+                        A amount is required
+                    </p>
+                </div>
+                <div class="form-group" ng-class="{ 'has-success': form.comment.$valid && vm.submitted,
+                                            'has-error': form.comment.$invalid && vm.submitted }">
+                    <label>Comment</label>
+                    <input type="text" name="comment" class="form-control" ng-model="vm.record.comment" />
+                    <!-- <p class="help-block" ng-show="form.comment.$error.required && vm.submitted">
+                        A comment is required
+                    </p> -->
+                </div>
+                <div>
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Create
+                    </button>
+                    <a class="btn btn-lg btn-default" ui-sref="record">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+</div>

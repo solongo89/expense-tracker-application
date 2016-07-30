@@ -1,0 +1,41 @@
+<div class="container">
+	<div class="row">
+        <div class="col-sm-12">
+            <button ng-click="vm.printStats()" class="btn btn-lg btn-primary">
+                <span class="fa fa-print"></span>
+                <span>Print</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="container" id="print-me">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Expenses Per Week</h1>
+        </div>
+    </div>
+    <table style="width: 100%;" border="1">
+    	<tr style="height: 3em;">
+    		<th width="40%">
+    			<b>Week</b>
+    		</th>
+    		<th width="30%">
+    			<b>Total Amount</b>
+    		</th>
+    		<th width="30%">
+    			<b>Average Day Spending</b>
+    		</th>
+    	</tr>
+    	<tr style="height: 3em;" ng-repeat="stat in vm.stats">
+    		<td>
+    			{{stat._id.week}}th Week of the Year {{stat._id.year}}
+    		</td>
+    		<td>
+    			{{stat.totalAmount | currency: ""}}
+    		</td>
+    		<td>
+    			{{stat.averageAmount | currency: ""}}
+    		</td>
+    	</tr>
+    </table>
+</div>

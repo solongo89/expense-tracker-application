@@ -72,7 +72,7 @@
         }
 
         showEditUser(user) {
-            if (user.role === 'admin'){
+            if (user.role === 'admin' || user._id === this.Auth.getCurrentUser()._id){
                 return;
             }
 

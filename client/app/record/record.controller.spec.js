@@ -3,7 +3,7 @@
 describe('Component: recordComponent', function() {
 
   // load the controller's module
-  beforeEach(module('expenseTrackingApp'));
+  beforeEach(module('expenseTrackingApp.record'));
   beforeEach(module('stateMock'));
 
   var scope;
