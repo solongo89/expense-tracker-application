@@ -1,6 +1,7 @@
 'use strict';
 
 import passport from 'passport';
+import auth from 'basic-auth';
 import config from '../config/environment';
 import jwt from 'jsonwebtoken';
 import expressJwt from 'express-jwt';
@@ -10,6 +11,22 @@ import User from '../api/user/user.model';
 var validateJwt = expressJwt({
     secret: config.secrets.session
 });
+
+var validateCredentials = function(credentials, req, res, next) {
+    require('./local/passport').localAuthenticate(User, credentials.name, credentials.pass, function(err, user, info) {
+        var error = err || info;
+        if (error) {
+            return res.status(401).json(error);
+        }
+        if (!user) {
+            return res.status(404).json({ message: 'Something went wrong, please try again.' });
+        }
+
+        req.user = user;
+
+        next();
+    });
+};
 
 /**
  * Attaches the user object to the request if authenticated
@@ -23,19 +40,36 @@ export function isAuthenticated() {
             if (req.query && req.query.hasOwnProperty('access_token')) {
                 req.headers.authorization = 'Bearer ' + req.query.access_token;
             }
-            validateJwt(req, res, next);
+
+            var credentials = auth(req);
+
+            if (credentials) {
+                return validateCredentials(credentials, req, res, next);
+            } else if (req.headers.authorization) {
+                return validateJwt(req, res, next);
+            } else {
+                res.statusCode = 401;
+                res.setHeader('WWW-Authenticate', 'Basic realm="ExpenseTrackingApp"');
+                res.end('Access denied');
+            }
         })
         // Attach user to request
         .use(function(req, res, next) {
-            User.findById(req.user._id).exec()
-                .then(user => {
-                    if (!user) {
-                        return res.status(401).end();
-                    }
-                    req.user = user;
-                    next();
-                })
-                .catch(err => next(err));
+            if (req.user && req.user._id && !req.user.email) {
+                User.findById(req.user._id).exec()
+                    .then(user => {
+                        if (!user) {
+                            return res.status(401).end();
+                        }
+                        req.user = user;
+                        next();
+                    })
+                    .catch(err => next(err));
+            } else if (req.user && req.user.email) {
+                next();
+            } else {
+                next('Access denied');
+            }
         });
 }
 
