@@ -19,7 +19,7 @@
                     <label>Date Time</label>
                     <!-- <input type="text" id="datetime" name="datetime" class="form-control form-date" data-date-format="yyyy-MM-dd hh:mm:00" required/> -->
                     <div class="input-group input-append date" id="datetimepicker">
-                        <input class="form-control form-date" data-format="yyyy-MM-dd hh:mm:00" name="date" type="text" id="date" ng-model="vm.record.datetime" >
+                        <input class="form-control form-date" data-format="yyyy-MM-dd hh:mm:00" name="date" type="text" id="date" ng-model="vm.record.datetime" ng-change="changeDate()">
                         <span class="input-group-addon add-on">
                             <i data-time-icon="fa fa-calendar" data-date-icon="fa fa-calendar"></i>
                         </span>

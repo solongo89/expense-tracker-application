@@ -4,9 +4,10 @@
 
     class RecordController {
 
-        constructor($http, $state, Auth, User, toastr, NgTableParams) {
+        constructor($http, $state, $filter, Auth, User, toastr, NgTableParams) {
             this.$http = $http;
             this.$state = $state;
+            this.$filter = $filter;
             this.Auth = Auth;
             this.NgTableParams = NgTableParams;
 
@@ -40,6 +41,8 @@
                     if ($state.params.record) {
                         this.record = this.$state.params.record;
                         this.record.user = this.record.user._id;
+                        var d = new Date(this.record.datetime.getTime() + 3600000);
+                        this.record.datetime = $filter('date')(d, 'yyyy-MM-dd HH:mm:ss', '+0000');
                     } else {
                         this.$state.go('record');
                     }
@@ -61,6 +64,10 @@
                 .then(response => {
                     this.tableParams = new this.NgTableParams({}, { dataset: response.data });
                     this.records = response.data;
+
+                    for (var i = 0, length = this.records.length; i < length; i++) {
+                        this.records[i].datetime = this.toDateTimePicker(this.records[i].datetime);
+                    }
                 });
         }
 
@@ -68,6 +75,8 @@
             this.submitted = true;
 
             if (form.$valid) {
+                this.record.datetime = this.fromDateTimePicker($('#date').val());
+
                 this.$http.post('/api/records', this.record).then(function() {
                     this.toastr.success('Added a New Record of Expense!');
                     this.$state.go('record');
@@ -83,6 +92,8 @@
             this.submitted = true;
 
             if (form.$valid) {
+                this.record.datetime = this.fromDateTimePicker($('#date').val());
+
                 this.$http.put('/api/records/' + this.record._id, this.record).then(function() {
                     this.toastr.success('Updated the existing record!');
                     this.$state.go('record');
@@ -110,11 +121,21 @@
         }
 
         printStats() {
-            var printContents = document.getElementById("print-me").innerHTML;
+            var printContents = document.getElementById('print-me').innerHTML;
             var popupWin = window.open('', '_blank', 'width=640, height=768');
             popupWin.document.open();
             popupWin.document.write('<html><head></head><body onload="window.print()">' + printContents + '</body></html>');
             popupWin.document.close();
+        }
+
+        fromDateTimePicker(date) {
+            var tmpDate = new Date(date);
+            return new Date(tmpDate.getTime() - tmpDate.getTimezoneOffset() * 60000);
+        }
+
+        toDateTimePicker(date) {
+            var tmpDate = new Date(date);
+            return new Date(tmpDate.getTime() + tmpDate.getTimezoneOffset() * 60000);
         }
     }
 

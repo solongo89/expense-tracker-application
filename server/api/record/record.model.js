@@ -15,7 +15,7 @@ var RecordSchema = new mongoose.Schema({
  */
 RecordSchema
     .pre('save', function(next) {
-        if (!this.error) {
+        if (this.error) {
             return next(new Error('Invalid records'));
         }
         //At this point, this.user holds the string value of the Object ID
